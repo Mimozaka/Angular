@@ -1,0 +1,23 @@
+<h1>{{AddVan}}</h1>
+
+<h3>Get Car by platenumber</h3>
+
+
+<p>Plate number : </p>
+<p><input Type="text" [(ngModel)]="carPlate"></p>
+<button (click)="findByPlate()">Select car</button>
+<div *ngIf=response>
+    <p>Brand of the  car : {{response.brand}}</p>
+    <p>Plate number : {{response.plateNumber}}</p>
+    <p>Number of seats : {{response.nomberOfSeats}}</p>
+    <p>Price of the car : {{response.price}}</p>
+    <button (click)="rent()">Rent it ! </button>
+</div>
+
+
+<h3>Get Cars :</h3>
+<button (click)="find()">Find Cars</button>
+
+
+
+
