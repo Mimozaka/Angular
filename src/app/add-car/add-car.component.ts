@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarServiceService } from '../car-service.service';
 import { Car } from '../car';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-car',
@@ -11,7 +11,12 @@ import { HttpClient } from '@angular/common/http';
 
 export class AddCarComponent implements OnInit {
   
-  AddVan : string ="Find your vehicle.";
+  car : Car = {
+    brand:'',
+    plateNumber:'',
+    numberOfSeats: null,
+    rented:false,
+  }
   cars : Car[]; 
   response : any;
   resp: any;
@@ -19,10 +24,23 @@ export class AddCarComponent implements OnInit {
   constructor(
     private carService: CarServiceService,
     private http: HttpClient) {
-	  }
+    }
+    
+    httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
   ngOnInit() {
     //this.carService.getCars().then((cars)=> this.cars = cars);
+    this.carService.getCarsWithObservable().subscribe(
+      res => {
+        this.cars = res;
+      }
+    );
+  }
+  createCar(car)
+  {
+    this.carService.add_car(car);
   }
 
   find(){
@@ -39,5 +57,10 @@ export class AddCarComponent implements OnInit {
       console.log(this.response)
     })
   }
+
+  rent(){
+   this.http.put('http://localhost:8080/cars/'+this.carPlate,this.car,this.httpOptions);
+   console.log('Location lancée.')
+    }
 }
 		

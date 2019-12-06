@@ -1,6 +1,6 @@
 export class Car {
-    name : string;
+    brand : string;
     plateNumber : string;
-    numberOfSeat : number;
+    numberOfSeats : number;
     rented : boolean;
   }
